@@ -5,7 +5,6 @@ import { Formik, Form, Field, FieldArray } from 'formik';
 import Result from "./Result";
 
 const Input = () => {
-  const [loadInputs, setLoadInputs] = useState(1);
   const [showResult, setShowResult] = useState(true);
 
   return (
@@ -17,7 +16,7 @@ const Input = () => {
           upsEfficiency: 0,
           dischargeDepth: 0,
           availableCapacity: 0,
-          loads: [{id: 1, value: 15}, {id: 2, value: 25}],
+          loads: [],
           totalLoad: 0,
         }}
         onSubmit={(values) => {
@@ -69,23 +68,29 @@ const Input = () => {
             </div>
             <div>
               <h4>Нагрузка, Вт:</h4>
-              <button type='button' onClick={() => setLoadInputs(loadInputs + 1)}>+</button>
-              <FieldArray name="loads" render={({insert, remove}) => {
-                return values.loads.map((load, index) => (
-                  <div className='input-group' key={`load${index}`}>
-                    <label className='input-label'>{`прибор ${index + 1}`}</label>
-                    <div className="input-group">
-                      <Field
-                        id={`load${index}`}
-                        name={`load${index}`}
-                        className='ups-input'
-                        type="number"
-                      />
-                      <button>-</button>
-                    </div>
-                  </div>
-                ))
-              }} />
+              <FieldArray name="loads" render={({ insert, remove }) => (
+                <div>
+                  {
+                    values.loads.map((load, index) => (
+                      <div className='input-group' key={`load${index}`}>
+                        <label className='input-label'>{`прибор ${index + 1}`}</label>
+                        <div className="input-group">
+                          <Field
+                            id={`load${index}`}
+                            name={`loads.${index}`}
+                            className='ups-input'
+                            type="number"
+                          />
+                          <button type="button" onClick={() => remove(index)}>-</button>
+                        </div>
+                      </div>
+                    ))
+                  }
+                  <button type="button" onClick={() => {
+                    insert(values.loads.length + 1, {id: 0, value: 0})
+                  }}>add load</button>
+                </div>
+              )} />
             </div>
             <button type='submit'>
               Рассчитать
