@@ -7,6 +7,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --bg: #f4fafc;
+  --border: #d6d6d6;
+  --button-color: 
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -18,26 +24,35 @@ code {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: var(--bg);
 }
 
 .title {
   font-weight: bold;
 }
 
-.input-group {
-  display: flex;
-  justify-content: space-between;
+.mb-1 {
   margin-bottom: 1rem;
 }
 
+.mr-2 {
+  margin-right: 2rem;
+}
+
+.flex-group {
+  display: flex;
+  justify-content: space-between;
+}
+
 .input-label {
-  margin-right: 1rem;
+
 }
 
 .ups-input {
   display: block;
   width: 50px;
   text-align: center;
+  border: 1px solid var(--border);
 }
 
 .ups-input[type="number"]::-webkit-outer-spin-button,
@@ -52,10 +67,37 @@ code {
     -moz-appearance: textfield;
 }
 
-.button-1 {
-
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.button-2 {
-  display: block;
+.submit-button {
+  background-color: #d5e6e6;
+  border: none;
+  border-radius: 2px;
+  padding: 0.5em;
+  width: 50%;
+  cursor: pointer;
+}
+
+.submit-button span {
+  font-weight: bold;
+}
+
+.add-button {
+  background-color: transparent;
+  border: 2px solid var(--border);
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 0.25em;
+}
+
+.delete-button {
+  width: 2rem;
+  cursor: pointer;
+  background: none;
+  color: red;
+  border: none;
 }
