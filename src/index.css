@@ -10,7 +10,7 @@ body {
 :root {
   --bg: #f4fafc;
   --border: #d6d6d6;
-  --button-color: 
+  --danger: #a6606d;
 }
 
 code {
@@ -42,6 +42,8 @@ code {
 .flex-group {
   display: flex;
   justify-content: space-between;
+
+  position: relative;
 }
 
 .input-label {
@@ -53,18 +55,6 @@ code {
   width: 50px;
   text-align: center;
   border: 1px solid var(--border);
-}
-
-.ups-input[type="number"]::-webkit-outer-spin-button,
-.ups-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-
-.ups-input[type='number'],
-.ups-input[type="number"]:hover,
-.ups-input[type="number"]:focus {
-    appearance: none;
-    -moz-appearance: textfield;
 }
 
 .flex-center {
@@ -98,6 +88,40 @@ code {
   width: 2rem;
   cursor: pointer;
   background: none;
-  color: red;
+  color: var(--danger);
   border: none;
+}
+
+.tooltip {
+  white-space: nowrap;
+  font-size: 0.8rem;
+  width: fit-content;
+  background-color: var(--danger);
+  position: absolute;
+  top: -75%;
+  left: 101%;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+}
+
+.tooltip::before {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #a6606d transparent transparent;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
 }

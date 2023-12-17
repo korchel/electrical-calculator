@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  voltage: 12,
-  capacitance: 72,
-  upsEfficiency: 0.9,
-  dischargeDepth: 0.9,
-  availableCapacity: 0.9,
+  voltage: 0,
+  capacitance: 0,
+  upsEfficiency: 0,
+  dischargeDepth: 0,
+  availableCapacity: 0,
   loads: [],
   totalLoad: 0,
   holdUpTime: 0,
@@ -29,14 +29,17 @@ const upsSlice = createSlice({
     setAvailableCapacity: (state, action) => {
       state.availableCapacity = action.payload;
     },
-    setTitalLoad: (state, action) => {
-      state.totalLoad = action.payload;
+    setLoads: (state, action) => {
+      state.loads = action.payload;
+    },
+    calculateTotalLoad: (state) => {
+      state.totalLoad = state.loads.reduce((value, acc) => value + acc, 0);
     },
     calculateHoldUptime: (state) => {
       const {
         voltage, capacitance, upsEfficiency, dischargeDepth, availableCapacity, totalLoad
       } = state;
-      state.holdUpTime = voltage * capacitance * upsEfficiency * dischargeDepth * availableCapacity / totalLoad;
+      state.holdUpTime = (voltage * capacitance * upsEfficiency * dischargeDepth * availableCapacity / totalLoad).toFixed(2);
     },
 
     addLoad: (state, action) => {
@@ -44,9 +47,13 @@ const upsSlice = createSlice({
     }
   }
 });
-
+export const state = upsSlice;
 export const {
-  setVoltage, setCapacitance, setUpsEfficiency, setDischargeDepth, setAvailableCapacity, setTitalLoad, calculateHoldUptime,
+  setVoltage, setCapacitance, setUpsEfficiency,
+  setDischargeDepth, setAvailableCapacity, setTitalLoad,
+  calculateHoldUptime, setLoads, calculateTotalLoad,
 } = upsSlice.actions;
+
+export const getValues = (state) => state.upsSlice;
 
 export default upsSlice.reducer;

@@ -1,29 +1,45 @@
 import { useState } from "react";
-import { useSelector } from 'react-redux';
-import { Formik, Form, Field, FieldArray } from 'formik';
+import { useDispatch } from 'react-redux';
+import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
 
 import Result from "./Result";
+import {
+  setVoltage, setCapacitance, setUpsEfficiency, setDischargeDepth,
+  setAvailableCapacity, setLoads, calculateHoldUptime, calculateTotalLoad,
+} from '../store/upsSlice'
+import validationSchema from './validationSchema';
+import state from '../store/index';
 
 const Input = () => {
   const [showResult, setShowResult] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <>
       <Formik
+        validationSchema={validationSchema}
         initialValues={{
-          voltage: 0,
-          capacitance: 0,
-          upsEfficiency: 0,
-          dischargeDepth: 0,
-          availableCapacity: 0,
-          loads: [],
-          totalLoad: 0,
+          voltage: '',
+          capacitance: '',
+          upsEfficiency: '',
+          dischargeDepth: '',
+          availableCapacity: '',
+          loads: ['', ],
         }}
         onSubmit={(values) => {
-          console.log(values)
+          const { voltage, capacitance, upsEfficiency, dischargeDepth, availableCapacity, loads } = values;
+          dispatch(setVoltage(voltage));
+          dispatch(setCapacitance(capacitance));
+          dispatch(setUpsEfficiency(upsEfficiency));
+          dispatch(setDischargeDepth(dischargeDepth));
+          dispatch(setAvailableCapacity(availableCapacity));
+          dispatch(setLoads(loads));
+          dispatch(calculateTotalLoad());
+          dispatch(calculateHoldUptime());
+          setShowResult(true);
         }}
       >
-        {({ errors, touched, values }) => (
+        {({ values }) => (
           <Form>
             <h2 className='title'>Исходные данные:</h2>
             <div className='flex-group mb-1 mr-2'>
@@ -31,40 +47,45 @@ const Input = () => {
               <Field
                 name='voltage'
                 className='ups-input'
-                type='number'
-              />
+                type="number"
+             />
+              <ErrorMessage name="voltage" component="p" className="tooltip" />
             </div>
             <div className='flex-group mb-1 mr-2'>
               <label className='input-label'>C - емкость задействованной АКБ, Ач</label>
               <Field
                 name='capacitance'
                 className='ups-input'
-                type='number'
+                type="number"
               />
+              <ErrorMessage name="capacitance" component="p" className="tooltip" />
             </div>
             <div className='flex-group mb-1 mr-2'>
               <label className='input-label'>КПД источника бесперебойного питания</label>
               <Field
                 name='upsEfficiency'
                 className='ups-input'
-                type='number'
+                type="number"
               />
+              <ErrorMessage name="upsEfficiency" component="p" className="tooltip" />
             </div>
             <div className='flex-group mb-1 mr-2'>
               <label className='input-label'>K - глубина разряда батареи</label>
               <Field
                 name='dischargeDepth'
                 className='ups-input'
-                type='number'
+                type="number"
               />
+              <ErrorMessage name="dischargeDepth" component="p" className="tooltip" />
             </div>
             <div className='flex-group mb-1 mr-2'>
               <label className='input-label'>Kg - доступная емкость</label>
               <Field
-                name='availableCapacity'
+                name="availableCapacity"
                 className='ups-input'
-                type='number'
+                type="number"
               />
+              <ErrorMessage name="availableCapacity" component="p" className="tooltip" />
             </div>
             <div>
               <h4>Нагрузка, Вт:</h4>
@@ -81,6 +102,7 @@ const Input = () => {
                           className='ups-input'
                           type="number"
                         />
+                        <ErrorMessage name={`loads.${index}`} component="p" className="tooltip" />
                         <button
                           type="button"
                           onClick={() => remove(index)}
@@ -109,7 +131,7 @@ const Input = () => {
               )} />
             </div>
             <div className="flex-center mb-1">
-              <button type='submit' className="submit-button" onClick={() => setShowResult(!showResult)}>
+              <button type='submit' className="submit-button">
                 <span>Рассчитать</span>
               </button>
             </div>
@@ -117,7 +139,7 @@ const Input = () => {
         )}
       </Formik>
 
-      {showResult && <Result />}
+      <Result show={showResult}/>
     </>
   );
 };
