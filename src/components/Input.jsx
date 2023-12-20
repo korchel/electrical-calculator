@@ -138,7 +138,7 @@ const Input = () => {
           </Form>
         )}
       </Formik>
-      <a download="" href="./index.html">download</a>
+      
       <Result show={showResult}/>
     </>
   );
