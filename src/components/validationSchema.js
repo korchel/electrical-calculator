@@ -7,6 +7,9 @@ export default Yup.object().shape({
   capacitance: Yup.number()
     .positive('Должно быть больше 0')
     .required('Обязательное поле'),
+  numberOfBatteries: Yup.number()
+    .positive('Должно быть больше 0')
+    .required('Обязательное поле'),
   upsEfficiency: Yup.number()
     .positive('Должно быть больше 0')
     .max(1, 'Должно быть меньше 1')

@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   voltage: 0,
   capacitance: 0,
+  numberOfBatteries: 0,
   upsEfficiency: 0,
   dischargeDepth: 0,
   availableCapacity: 0,
@@ -19,6 +20,9 @@ const upsSlice = createSlice({
     },
     setCapacitance: (state, action) => {
       state.capacitance = action.payload;
+    },
+    setNumberOfBatteries: (state, action) => {
+      state.numberOfBatteries = action.payload;
     },
     setUpsEfficiency: (state, action) => {
       state.upsEfficiency = action.payload;
@@ -37,9 +41,9 @@ const upsSlice = createSlice({
     },
     calculateHoldUptime: (state) => {
       const {
-        voltage, capacitance, upsEfficiency, dischargeDepth, availableCapacity, totalLoad
+        voltage, capacitance, numberOfBatteries, upsEfficiency, dischargeDepth, availableCapacity, totalLoad
       } = state;
-      state.holdUpTime = (voltage * capacitance * upsEfficiency * dischargeDepth * availableCapacity / totalLoad).toFixed(2);
+      state.holdUpTime = (voltage * capacitance * numberOfBatteries * upsEfficiency * dischargeDepth * availableCapacity / totalLoad).toFixed(2);
     },
 
     addLoad: (state, action) => {
@@ -49,7 +53,7 @@ const upsSlice = createSlice({
 });
 export const state = upsSlice;
 export const {
-  setVoltage, setCapacitance, setUpsEfficiency,
+  setVoltage, setCapacitance, setNumberOfBatteries, setUpsEfficiency,
   setDischargeDepth, setAvailableCapacity, setTitalLoad,
   calculateHoldUptime, setLoads, calculateTotalLoad,
 } = upsSlice.actions;

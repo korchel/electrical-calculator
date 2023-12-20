@@ -4,7 +4,7 @@ import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
 
 import Result from "./Result";
 import {
-  setVoltage, setCapacitance, setUpsEfficiency, setDischargeDepth,
+  setVoltage, setCapacitance, setNumberOfBatteries, setUpsEfficiency, setDischargeDepth, 
   setAvailableCapacity, setLoads, calculateHoldUptime, calculateTotalLoad,
 } from '../store/upsSlice'
 import validationSchema from './validationSchema';
@@ -21,15 +21,17 @@ const Input = () => {
         initialValues={{
           voltage: '',
           capacitance: '',
+          numberOfBatteries: '',
           upsEfficiency: '',
           dischargeDepth: '',
           availableCapacity: '',
           loads: ['', ],
         }}
         onSubmit={(values) => {
-          const { voltage, capacitance, upsEfficiency, dischargeDepth, availableCapacity, loads } = values;
+          const { voltage, capacitance, numberOfBatteries, upsEfficiency, dischargeDepth, availableCapacity, loads } = values;
           dispatch(setVoltage(voltage));
           dispatch(setCapacitance(capacitance));
+          dispatch(setNumberOfBatteries(numberOfBatteries));
           dispatch(setUpsEfficiency(upsEfficiency));
           dispatch(setDischargeDepth(dischargeDepth));
           dispatch(setAvailableCapacity(availableCapacity));
@@ -43,17 +45,29 @@ const Input = () => {
           <Form>
             <h2 className='title'>Исходные данные:</h2>
             <div className='flex-group mb-1 mr-2'>
-              <label className='input-label mr-2'>U - Напряжение, выдаваемое задействованной АКБ, В</label>
+              <label
+                htmlFor="voltage"
+                className='input-label mr-2'
+              >
+                U - Напряжение, выдаваемое задействованной АКБ, В
+              </label>
               <Field
-                name='voltage'
+                id="voltage"
+                name="voltage"
                 className='ups-input'
                 type="number"
              />
               <ErrorMessage name="voltage" component="p" className="tooltip" />
             </div>
             <div className='flex-group mb-1 mr-2'>
-              <label className='input-label'>C - емкость задействованной АКБ, Ач</label>
+              <label
+                htmlFor='capacitance'
+                className='input-label'
+              >
+                C - емкость АКБ, Ач
+              </label>
               <Field
+                id="capacitance"
                 name='capacitance'
                 className='ups-input'
                 type="number"
@@ -61,8 +75,29 @@ const Input = () => {
               <ErrorMessage name="capacitance" component="p" className="tooltip" />
             </div>
             <div className='flex-group mb-1 mr-2'>
-              <label className='input-label'>КПД источника бесперебойного питания</label>
+              <label
+                htmlFor='numberOfBatteries'
+                className="input-label"
+              >
+                N - количество АКБ, шт.
+              </label>
               <Field
+                id="numberOfBatteries"
+                name='numberOfBatteries'
+                className='ups-input'
+                type="number"
+              />
+              <ErrorMessage name="numberOfBatteries" component="p" className="tooltip" />
+            </div>
+            <div className='flex-group mb-1 mr-2'>
+              <label
+                htmlFor="upsEfficiency"
+                className='input-label'
+              >
+                КПД источника бесперебойного питания
+              </label>
+              <Field
+                id="upsEfficiency"
                 name='upsEfficiency'
                 className='ups-input'
                 type="number"
@@ -70,8 +105,14 @@ const Input = () => {
               <ErrorMessage name="upsEfficiency" component="p" className="tooltip" />
             </div>
             <div className='flex-group mb-1 mr-2'>
-              <label className='input-label'>K - глубина разряда батареи</label>
+              <label
+                htmlFor="dischargeDepth"
+                className='input-label'
+              >
+                K - глубина разряда батареи
+              </label>
               <Field
+                id="dischargeDepth"
                 name='dischargeDepth'
                 className='ups-input'
                 type="number"
@@ -79,8 +120,14 @@ const Input = () => {
               <ErrorMessage name="dischargeDepth" component="p" className="tooltip" />
             </div>
             <div className='flex-group mb-1 mr-2'>
-              <label className='input-label'>Kg - доступная емкость</label>
+              <label
+                htmlFor="availableCapacity"
+                className='input-label'
+              >
+                Kg - доступная емкость
+              </label>
               <Field
+                id="availableCapacity"
                 name="availableCapacity"
                 className='ups-input'
                 type="number"
@@ -94,7 +141,7 @@ const Input = () => {
                   {
                     values.loads.map((load, index) => (
                       <div className='flex-group mb-1' key={`load${index}`}>
-                        <label className='input-label'>{`прибор ${index + 1}`}</label>
+                        <label htmlFor={`load${index}`} className='input-label'>{`прибор ${index + 1}`}</label>
                         <div className='flex-group'>
                         <Field
                           id={`load${index}`}
