@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   voltage: 0,
-  accumulators: [],
+  accumulator: {},
   upsEfficiency: 0,
   dischargeDepth: 0,
   availableCapacity: 0,
@@ -18,8 +18,8 @@ const upsSlice = createSlice({
     setVoltage: (state, action) => {
       state.voltage = action.payload;
     },
-    setAccumulators: (state, action) => {
-      state.accumulators = action.payload;
+    setAccumulator: (state, action) => {
+      state.accumulator = action.payload;
     },
     setUpsEfficiency: (state, action) => {
       state.upsEfficiency = action.payload;
@@ -49,7 +49,7 @@ const upsSlice = createSlice({
 });
 export const state = upsSlice;
 export const {
-  setVoltage, setAccumulators, setUpsEfficiency,
+  setVoltage, setAccumulator, setUpsEfficiency,
   setDischargeDepth, setAvailableCapacity,
   calculateHoldUptime, setLoads, calculateTotalLoad, calculateCapacitance,
 } = upsSlice.actions;

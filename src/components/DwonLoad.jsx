@@ -7,7 +7,7 @@ import { getValues } from '../store/upsSlice';
 
 const DwonLoad = () => {
   const values = useSelector(getValues);
-  const { voltage, capacitance, accumulators, upsEfficiency, dischargeDepth, availableCapacity, totalLoad, holdUpTime, loads } = values;
+  const { voltage, capacitance, accumulator, upsEfficiency, dischargeDepth, availableCapacity, totalLoad, holdUpTime, loads } = values;
   
   const book = new Excel.Workbook();
   const sheet = book.addWorksheet('ИБП');
@@ -45,7 +45,7 @@ const DwonLoad = () => {
     [],
     ['РАСЧЕТ:'],
     ['Источник питания:', 'КОЛ.', 'C, Ач'],
-    ...accumulators,
+    accumulator,
     ['Формула расчета:'],
     ['Т = U * С * h * К * Kg / P'],
   ]);
@@ -86,7 +86,7 @@ const DwonLoad = () => {
     }
   }
   return (
-    <button type="button"className="primary-button" onClick={saveExcelFile}><span>Скачать Excel</span></button>
+    <button type="button" className="primary-button" onClick={saveExcelFile}><span>Скачать Excel</span></button>
   );
 };
 
