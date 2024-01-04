@@ -1,8 +1,9 @@
+import React from 'react';
 import './App.css';
 import { Provider } from 'react-redux';
 
 import store from './store/index.js';
-import Input from './components/Input';
+import Input from './components/Input.jsx';
 
 const App = () => (
   

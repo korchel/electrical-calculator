@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { React, useState } from "react";
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
 
@@ -148,20 +148,18 @@ const Input = () => {
                 {
                   values.loads.map((load, index) => (
                     <div className='grid-full-row subgrid' key={`load${index}`}>
-
                       <Field
                         id={`load${index}name`}
                         name={`loads.${index}.name`}
                         className="ups-input load-name-input"
                       />
-                      <button
-                          type="button"
-                          onClick={() => remove(index)}
-                          className="del-btn visibility-sm"
-                        >
-                          &#x2716;
-                        </button>
-
+                      {index > 0 && <button
+                        type="button"
+                        onClick={() => remove(index)}
+                        className="del-btn visibility-sm"
+                      >
+                        &#x2716;
+                      </button>}
                       <label
                         htmlFor={`load${index}quantity`}
                         className="grid-end grid-first-column"
@@ -189,13 +187,13 @@ const Input = () => {
                           type="number"
                         />
                         <ErrorMessage name={`loads.${index}.value`} component="p" className="tooltip" />
-                        <button
+                        {index > 0 && <button
                           type="button"
                           onClick={() => remove(index)}
                           className="del-btn visibility-md"
                         >
                           &#x2716;
-                        </button>
+                        </button>}
                       </div>
                     </div>
                   ))

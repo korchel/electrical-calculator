@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+/* eslint-disable functional/no-expression-statements */
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   voltage: 0,
@@ -10,7 +11,7 @@ const initialState = {
   totalLoad: 0,
   capacitance: 0,
   holdUpTime: 0,
-}
+};
 const upsSlice = createSlice({
   name: 'ups',
   initialState,
@@ -37,15 +38,22 @@ const upsSlice = createSlice({
       state.totalLoad = state.loads.reduce((acc, load) => load.value * load.quantity + acc, 0);
     },
     calculateCapacitance: (state) => {
-      state.capacitance = state.accumulators.reduce((acc, accumulator) => accumulator.value * accumulator.quantity + acc, 0);
+      state.capacitance = state.accumulators
+        .reduce((acc, accumulator) => accumulator.value * accumulator.quantity + acc, 0);
     },
     calculateHoldUptime: (state) => {
       const {
-        voltage, capacitance, upsEfficiency, dischargeDepth, availableCapacity, totalLoad
+        voltage, capacitance, upsEfficiency, dischargeDepth, availableCapacity, totalLoad,
       } = state;
-      state.holdUpTime = (voltage * capacitance * upsEfficiency * dischargeDepth * availableCapacity / totalLoad).toFixed(2);
+      state
+        .holdUpTime = (voltage
+          * capacitance
+          * upsEfficiency
+          * dischargeDepth
+          * availableCapacity
+          / totalLoad).toFixed(2);
     },
-  }
+  },
 });
 export const state = upsSlice;
 export const {
@@ -54,6 +62,6 @@ export const {
   calculateHoldUptime, setLoads, calculateTotalLoad, calculateCapacitance,
 } = upsSlice.actions;
 
-export const getValues = (state) => state.upsSlice;
+export const getValues = () => state.upsSlice;
 
 export default upsSlice.reducer;
