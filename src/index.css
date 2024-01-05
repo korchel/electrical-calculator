@@ -41,12 +41,22 @@ h1, h2, h3, h4, h5, h6 {
   background-color: var(--bg);
 }
 
+.flex-group {
+  display: flex;
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+
+/* GRID */
+
 .grid {
   display: grid;
 
-  grid-template-columns: minmax(300px, 100%) 110px 60px 110px 80px;
+  grid-template-columns: minmax(250px, 100%) 110px 80px 110px 80px;
   grid-auto-rows: auto;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
 }
 
@@ -65,42 +75,20 @@ h1, h2, h3, h4, h5, h6 {
 .subgrid {
   display: grid;
   grid-template-columns: subgrid;
-  gap: 10px;
+  gap: 20px;
 }
 
-.title {
-  font-weight: bold;
-}
+/* BUTTONS */
 
-.text-small {
-  font-size: 0.8rem;
-}
-
-.flex-group {
+.flex-button-group {
   display: flex;
-
-  position: relative;
-}
-
-.input-label {
-  display: block;
-  min-width: 200px;
-}
-
-.ups-input {
-  background-color: #f9fcfd;
-  display: block;
-  width: 60px;
-  text-align: center;
-  border: 2px solid var(--border);
-}
-
-.ups-input:focus {
-  outline: 2px solid var(--input-outline);
+  justify-content: space-around;
+  gap: 10px;
 }
 
 .primary-button {
   height: 30px;
+  max-width: 400px;
   grid-column: span 3;
   justify-self: center;
   background-color: var(--button);
@@ -134,7 +122,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .del-btn {
-  width: 2rem;
+  width: 1.5rem;
   cursor: pointer;
   background: none;
   color: var(--danger);
@@ -149,39 +137,49 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
 }
 
-.tooltip {
-  white-space: nowrap;
-  font-size: 0.8rem;
-  width: fit-content;
-  background-color: var(--danger);
-  position: absolute;
-  top: -75%;
-  left: 101%;
-  color: white;
-  border-radius: 5px;
-  padding: 5px;
-  text-align: center;
-  z-index: 50;
-}
+/* ERROR-MESSAGE*/
 
-.tooltip::before {
-  content: " ";
+.error-message {
   position: absolute;
-  top: 50%;
-  right: 100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent #a6606d transparent transparent;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+  right: 0;
   margin: 0;
+  grid-column: 1 / -1;
+
+  font-size: 0.8rem;
+  white-space: nowrap;
+  text-align: center;
+  color: var(--danger);
 }
-input[type="number"] {
-  -moz-appearance: textfield;
+
+.relative {
+  position: relative;
+}
+
+/* INPUTS */
+
+.input-label {
+  display: block;
+  min-width: 200px;
+}
+
+.ups-input {
+  background-color: #f9fcfd;
+  display: block;
+  width: 100%;
+  text-align: center;
+  border: 2px solid var(--border);
+}
+
+.ups-input:focus {
+  outline: 2px solid var(--input-outline);
+}
+
+.input-error {
+  outline: 2px solid var(--danger);
+}
+
+.w-70 {
+  width: 70%;
 }
 
 .load-name-input {
@@ -191,9 +189,13 @@ input[type="number"] {
   text-align: start;
 }
 
-.flex-button-group {
-  display: flex;
-  gap: 10px;
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 @media (max-width: 750px) {

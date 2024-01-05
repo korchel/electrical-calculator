@@ -24,12 +24,12 @@ export default Yup.object().shape({
       .positive('Должно быть больше 0')
       .required('Обязательное поле'),
   })),
-  accumulators: Yup.array().of(Yup.object().shape({
+  accumulator: Yup.object().shape({
     quantity: Yup.number()
       .positive('Должно быть больше 0')
       .required('Обязательное поле'),
     value: Yup.number()
       .positive('Должно быть больше 0')
       .required('Обязательное поле'),
-  })),
+  }),
 });

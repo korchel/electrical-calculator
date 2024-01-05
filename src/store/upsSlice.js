@@ -1,4 +1,5 @@
 /* eslint-disable functional/no-expression-statements */
+/* eslint-disable no-shadow */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -38,8 +39,8 @@ const upsSlice = createSlice({
       state.totalLoad = state.loads.reduce((acc, load) => load.value * load.quantity + acc, 0);
     },
     calculateCapacitance: (state) => {
-      state.capacitance = state.accumulators
-        .reduce((acc, accumulator) => accumulator.value * accumulator.quantity + acc, 0);
+      const { quantity, value } = state.accumulator;
+      state.capacitance = quantity * value;
     },
     calculateHoldUptime: (state) => {
       const {
