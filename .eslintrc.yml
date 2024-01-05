@@ -20,6 +20,23 @@ plugins:
   - functional
 
 rules:
+  jsx-a11y/label-has-associated-control: [
+    'error',
+    {
+      required: {
+        some: ['nesting', 'id'],
+      },
+    },
+  ]
+  jsx-a11y/label-has-for: [
+    'error',
+    {
+      required: {
+        some: ['nesting', 'id'],
+      },
+    },
+  ]
+  functional/no-let: 0
   no-param-reassign: 0
   import/extensions: 0
   import/no-unresolved: 0

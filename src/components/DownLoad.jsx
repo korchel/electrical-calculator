@@ -1,3 +1,4 @@
+/* eslint-disable functional/no-expression-statements */
 import React from 'react';
 import Excel from 'exceljs';
 import { saveAs } from 'file-saver';
@@ -7,15 +8,18 @@ import { getValues } from '../store/upsSlice';
 
 const DwonLoad = () => {
   const values = useSelector(getValues);
-  const { voltage, capacitance, accumulator, upsEfficiency, dischargeDepth, availableCapacity, totalLoad, holdUpTime, loads } = values;
-  
+  const {
+    voltage, capacitance, accumulator, upsEfficiency,
+    dischargeDepth, availableCapacity, totalLoad, holdUpTime, loads,
+  } = values;
+
   const book = new Excel.Workbook();
   const sheet = book.addWorksheet('ИБП');
   sheet.columns = [
-    { header: 'ПРИБОРЫ', key: 'name', width: 65},
+    { header: 'ПРИБОРЫ', key: 'name', width: 65 },
     { header: 'КОЛ., шт.', key: 'quantity', width: 10 },
     { header: 'P, Вт', key: 'value', width: 13 },
-    { header: '', key: 'empty', width: 16 }
+    { header: '', key: 'empty', width: 16 },
   ];
   sheet.spliceRows(1, 0, []);
   sheet.spliceRows(2, 0, ['Напряжение питания = 220 В']);
@@ -27,15 +31,15 @@ const DwonLoad = () => {
   const secondColumn = sheet.getColumn(2);
   const thirdColumn = sheet.getColumn(3);
 
-  firstColumn.font = {name: 'Arial Narrow', size: 9};
-  secondColumn.font = {name: 'Arial Narrow', size: 9};
-  thirdColumn.font = {name: 'Arial Narrow', size: 9};
+  firstColumn.font = { name: 'Arial Narrow', size: 9 };
+  secondColumn.font = { name: 'Arial Narrow', size: 9 };
+  thirdColumn.font = { name: 'Arial Narrow', size: 9 };
 
   sheet.getRow(6).font = { bold: true, color: { argb: 'ff0000ff' } };
-  
-  secondColumn.alignment = { horizontal: 'center'};
-  thirdColumn.alignment = { horizontal: 'center'};
-  
+
+  secondColumn.alignment = { horizontal: 'center' };
+  thirdColumn.alignment = { horizontal: 'center' };
+
   sheet.addRows(loads);
 
   let lastLoadNumber = sheet.lastRow.number;
@@ -74,17 +78,17 @@ const DwonLoad = () => {
     [],
     [`Согласно ТЗ на системы безопасности: "время работы периферийного оборудования от источников бесперебойного питания должно
       быть не менее 30 мин. ", следовательно: Источник питания в данной конфигурации подходит под требования к системе СОТ`],
-    []
+    [],
   ]);
 
   const saveExcelFile = async () => {
     try {
       const buffer = await book.xlsx.writeBuffer();
       saveAs(new Blob([buffer]), 'file.xlsx');
-    } catch(error) {
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
   return (
     <button type="button" className="primary-button" onClick={saveExcelFile}><span>Скачать Excel</span></button>
   );

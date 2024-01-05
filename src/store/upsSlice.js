@@ -62,6 +62,6 @@ export const {
   calculateHoldUptime, setLoads, calculateTotalLoad, calculateCapacitance,
 } = upsSlice.actions;
 
-export const getValues = () => state.upsSlice;
+export const getValues = (state) => state.upsSlice;
 
 export default upsSlice.reducer;
